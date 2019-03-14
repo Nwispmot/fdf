@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/nwispmot/Desktop/Fdf/fdf.h
+mlx.h
+/Users/nwispmot/Desktop/Fdf/mlx.h
+stdlib.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+unistd.h
+-
+stdio.h
+-
+fcntl.h
+-
+libft/libft.h
+/Users/nwispmot/Desktop/Fdf/libft/libft.h
+stdio.h
+-
+
+/Users/nwispmot/Desktop/Fdf/keys.c
+fdf.h
+/Users/nwispmot/Desktop/Fdf/fdf.h
+
+/Users/nwispmot/Desktop/Fdf/libft/libft.h
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+string.h
+-
+stdlib.h
+-
+unistd.h
+-
+
