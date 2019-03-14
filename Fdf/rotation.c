@@ -70,7 +70,7 @@ void z_rotation(t_fdf *fdf)
         {
             tmp = fdf->mass[y][x].x;
             fdf->mass[y][x].x = fdf->mass[y][x].x * cos(0.1) - fdf->mass[y][x].y * sin(0.1);
-            fdf->mass[y][x].y = -tmp * sin(0.1) + fdf->mass[y][x].y * cos(0.1);
+            fdf->mass[y][x].y = tmp * sin(0.1) + fdf->mass[y][x].y * cos(0.1);
             x++;
         }
         x = 0;

@@ -46,6 +46,7 @@ typedef struct s_mcoor
     int mult;
     int place_w;
     int place_h;
+    int *image;
 
 }              t_fdf;
 

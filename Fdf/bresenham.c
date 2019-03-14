@@ -42,7 +42,7 @@ static void LineLow(t_fdf *fdf, double x0, double y0, double x1, double y1)
 
     while(x0 < x1)
     {
-        mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, x0, y, 0xff00ff);
+        mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, x0, y, 0x00ffff);
         if (D > 0)
         {
             y = y + yi;
@@ -55,18 +55,18 @@ static void LineLow(t_fdf *fdf, double x0, double y0, double x1, double y1)
 
 static void LineHigh(t_fdf *fdf, double x0, double y0, double x1, double y1)
 {
-    double D;
     double dx;
     double dy;
     double yi;
     double xi;
     double x;
     double y;
+    double D;
 
     dx = x1 - x0;
     dy = y1 - y0;
     xi = 1;
-    if (dy < 0)
+    if (dx < 0)
     {
         xi = -1;
         dx = -dx;
@@ -76,7 +76,7 @@ static void LineHigh(t_fdf *fdf, double x0, double y0, double x1, double y1)
 
     while(y0 < y1)
     {
-        mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, x, y0, 0xff00ff);
+        mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, x, y0, 0x00ffff);
         if (D > 0)
         {
             x = x + xi;
@@ -89,7 +89,7 @@ static void LineHigh(t_fdf *fdf, double x0, double y0, double x1, double y1)
 
 void bresenham(t_fdf *fdf, double x0, double y0, double x1, double y1)
 {
-    if (ft_abs(y1 - y0) < ft_abs(x1 - x0))
+    if (fabs(y1 - y0) < fabs(x1 - x0))
     {
         if (x0 > x1)
             LineLow(fdf, x1, y1, x0, y0);

@@ -20,8 +20,8 @@ int ft_mult(t_fdf *fdf)
         mult = fdf->win_w / fdf->width - 10;
     else
         mult = fdf->win_w / fdf->height - 10;
-    if (mult > 40)
-        mult = 40;
+    if (mult > 30)
+        mult = 30;
     return (mult);
 }
 
@@ -88,5 +88,6 @@ t_fdf *coordinates(int fd)
     fdf->mult = ft_mult(fdf);
     fdf->place_w = (fdf->win_w - (fdf->width - 1) * fdf->mult) / 2;
     fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
+
     return(fdf);
 }
