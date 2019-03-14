@@ -25,8 +25,8 @@ void x_rotation(t_fdf *fdf)
         while (x < fdf->width)
         {
             tmp = fdf->mass[y][x].y;
-            fdf->mass[y][x].y = fdf->mass[y][x].y * cos(0.1) + fdf->mass[y][x].z * sin(0.1);
-            fdf->mass[y][x].z = -tmp * sin(0.1) + fdf->mass[y][x].z * cos(0.1);
+            fdf->mass[y][x].y = fdf->mass[y][x].y * cos(fdf->sico) + fdf->mass[y][x].z * sin(fdf->sico);
+            fdf->mass[y][x].z = -tmp * sin(fdf->sico) + fdf->mass[y][x].z * cos(fdf->sico);
             x++;
         }
         x = 0;
@@ -47,8 +47,8 @@ void y_rotation(t_fdf *fdf)
         while (x < fdf->width)
         {
             tmp = fdf->mass[y][x].x;
-            fdf->mass[y][x].x = fdf->mass[y][x].x * cos(0.1) + fdf->mass[y][x].z * sin(0.1);
-            fdf->mass[y][x].z = -tmp * sin(0.1) + fdf->mass[y][x].z * cos(0.1);
+            fdf->mass[y][x].x = fdf->mass[y][x].x * cos(fdf->sico) + fdf->mass[y][x].z * sin(fdf->sico);
+            fdf->mass[y][x].z = -tmp * sin(fdf->sico) + fdf->mass[y][x].z * cos(fdf->sico);
             x++;
         }
         x = 0;
@@ -69,8 +69,8 @@ void z_rotation(t_fdf *fdf)
         while (x < fdf->width)
         {
             tmp = fdf->mass[y][x].x;
-            fdf->mass[y][x].x = fdf->mass[y][x].x * cos(0.1) - fdf->mass[y][x].y * sin(0.1);
-            fdf->mass[y][x].y = tmp * sin(0.1) + fdf->mass[y][x].y * cos(0.1);
+            fdf->mass[y][x].x = fdf->mass[y][x].x * cos(fdf->sico) - fdf->mass[y][x].y * sin(fdf->sico);
+            fdf->mass[y][x].y = tmp * sin(fdf->sico) + fdf->mass[y][x].y * cos(fdf->sico);
             x++;
         }
         x = 0;

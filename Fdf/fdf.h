@@ -21,8 +21,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "libft/libft.h"
-
-# include <stdio.h>
+# define BUFF_SIZE 10000
 # include <math.h>
 
 typedef struct s_coordinates
@@ -36,6 +35,7 @@ typedef struct s_coordinates
 typedef struct s_mcoor
 {
     t_coor **mass;
+    t_coor **begin;
     void *mlx_ptr;
     void *win_ptr;
     int height;
@@ -47,6 +47,7 @@ typedef struct s_mcoor
     int place_w;
     int place_h;
     int *image;
+    double sico;
 
 }              t_fdf;
 
@@ -57,6 +58,7 @@ void validation(t_fdf *fdf, char **temp);
 t_fdf *coordinates(int fd);
 void bresenham(t_fdf *fdf, double x0, double y0, double x1, double y1);
 void print(t_fdf *fdf);
+void begin(t_fdf *fdf);
 void x_rotation(t_fdf *fdf);
 void y_rotation(t_fdf *fdf);
 void z_rotation(t_fdf *fdf);

@@ -72,5 +72,12 @@ int keys(int key, t_fdf *fdf)
         z_rotation(fdf);
         print(fdf);
     }
+    if (key == 11)
+    {
+        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
+        begin(fdf);
+        print(fdf);
+
+    }
     return (0);
 }

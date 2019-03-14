@@ -22,6 +22,8 @@ int ft_mult(t_fdf *fdf)
         mult = fdf->win_w / fdf->height - 10;
     if (mult > 30)
         mult = 30;
+    if (mult < 1)
+        mult = 1;
     return (mult);
 }
 
@@ -30,24 +32,42 @@ void validation(t_fdf *fdf, char **temp)
     int width;
 
     width = 0;
-    while(temp[width] != NULL)
+    while(temp[width] != '\0')
         width++;
+    printf("%d\n", fdf->width);
     if (fdf->width != width)
     {
+        printf("%d\n", width);
         ft_putstr("Invalid file\n");
         exit(0);
     }
 }
 
-t_fdf *coordinates(int fd)
+char *buffer(int fd)
 {
     char buf[BUFF_SIZE + 1];
+    char *temp;
+    char *del;
     int ret;
+
+    temp = ft_strnew(0);
+    while((ret = read(fd, buf, BUFF_SIZE)) > 0)
+    {
+        buf[ret] = '\0';
+        del = temp;
+        temp = ft_strjoin(temp, buf);
+        free(del);
+    }
+    return(temp);
+}
+
+t_fdf *coordinates(int fd)
+{
     int x;
     int y;
+    char *buf;
     char **temp;
     t_fdf *fdf;
-    int i=-1;
 
     x = 0;
     y = 0;
@@ -55,12 +75,13 @@ t_fdf *coordinates(int fd)
         exit(0);
     fdf->height = 0;
     fdf->width = 0;
-    ret = read(fd, buf, BUFF_SIZE);
-    buf[ret] = '\0';
+    buf = buffer(fd);
     fdf->map = ft_strsplit(buf, '\n');
     while (fdf->map[fdf->height] != NULL)
         fdf->height++;
     if(!(fdf->mass = (t_coor**)malloc(sizeof(t_coor) * fdf->height)))
+        exit(0);
+    if(!(fdf->begin = (t_coor**)malloc(sizeof(t_coor) * fdf->height)))
         exit(0);
     temp = ft_strsplit(fdf->map[0], ' ');
     while(temp[fdf->width] != NULL)
@@ -70,17 +91,22 @@ t_fdf *coordinates(int fd)
     {
         if (!(fdf->mass[y] = (t_coor*)malloc(sizeof(t_coor) * fdf->width)))
             exit(0);
+        if (!(fdf->begin[y] = (t_coor*)malloc(sizeof(t_coor) * fdf->width)))
+            exit(0);
         //validation(fdf, temp);
         while (x < fdf->width)
         {
             fdf->mass[y][x].x = x;
             fdf->mass[y][x].y = y;
             fdf->mass[y][x].z = ft_atoi(temp[x]);
+            fdf->begin[y][x].x = x;
+            fdf->begin[y][x].y = y;
+            fdf->begin[y][x].z = ft_atoi(temp[x]);
             x++;
         }
         x = 0;
         y++;
-        free(temp);
+        ft_strdel(temp);
         temp = ft_strsplit(fdf->map[y], ' ');
     }
     fdf->win_h = 1000;
@@ -88,6 +114,7 @@ t_fdf *coordinates(int fd)
     fdf->mult = ft_mult(fdf);
     fdf->place_w = (fdf->win_w - (fdf->width - 1) * fdf->mult) / 2;
     fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
+    fdf->sico = 0.1;
 
     return(fdf);
 }
