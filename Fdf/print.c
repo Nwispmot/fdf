@@ -42,9 +42,10 @@ void print(t_fdf *fdf)
                   fdf->mass[y][x + 1].x * fdf->mult + fdf->place_w, fdf->mass[y][x + 1].y * fdf->mult + fdf->place_h);
         x++;
     }
+    mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, fdf->win_w / 2, fdf->win_h / 2, 0xff0000);
 }
 
-void begin(t_fdf *fdf)
+void begin(t_fdf *fdf, int pr)
 {
     int x;
     int y;
@@ -58,9 +59,15 @@ void begin(t_fdf *fdf)
             fdf->mass[y][x].x = fdf->begin[y][x].x;
             fdf->mass[y][x].y = fdf->begin[y][x].y;
             fdf->mass[y][x].z = fdf->begin[y][x].z;
+            fdf->place_h = fdf->beplace_h;
+            fdf->place_w = fdf->beplace_w;
+            fdf->mult = fdf->bemult;
             x++;
         }
         x = 0;
         y++;
     }
+    mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
+    if (pr == 1)
+        print(fdf);
 }

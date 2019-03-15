@@ -12,19 +12,31 @@
 
 #include "fdf.h"
 
-int ft_mult(t_fdf *fdf)
+void ft_mult(t_fdf *fdf)
 {
+    int tmp;
     int mult;
 
-    if (fdf->width > fdf->height)
-        mult = fdf->win_w / fdf->width - 10;
-    else
-        mult = fdf->win_w / fdf->height - 10;
-    if (mult > 30)
-        mult = 30;
-    if (mult < 1)
-        mult = 1;
-    return (mult);
+    tmp = fdf->width;
+    if (fdf->height > tmp)
+        tmp = fdf->height;
+    printf("tmp = %d\n", tmp);
+    mult = 30;
+    if (tmp >= 100)
+    {
+        while (tmp > 9)
+            tmp = tmp / 10;
+        mult = tmp;
+    }
+    else if (tmp > 25 && tmp < 100)
+    {
+        while (tmp > 9)
+            tmp = tmp / 10;
+        mult = tmp + 10;
+    }
+    printf("mult = %d\n", mult);
+    fdf->mult = mult;
+    fdf->bemult = mult;
 }
 
 void validation(t_fdf *fdf, char **temp)
@@ -111,9 +123,11 @@ t_fdf *coordinates(int fd)
     }
     fdf->win_h = 1000;
     fdf->win_w = 1000;
-    fdf->mult = ft_mult(fdf);
+    ft_mult(fdf);
     fdf->place_w = (fdf->win_w - (fdf->width - 1) * fdf->mult) / 2;
     fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
+    fdf->beplace_h = fdf->place_h;
+    fdf->beplace_w = fdf->place_w;
     fdf->sico = 0.1;
 
     return(fdf);

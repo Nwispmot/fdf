@@ -16,9 +16,7 @@ int main(int argc, char **argv)
 {
     int fd;
     t_fdf *fdf;
-    int i;
 
-    i = 0;
     fd = open(argv[1], O_RDONLY);
     if (argc != 2)
     {

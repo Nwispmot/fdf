@@ -12,12 +12,13 @@
 
 NAME = fdf
 
-SRC = fdf.c \
+SRC = main.c \
       keys.c \
       coord_n_valid.c \
       bresenham.c \
       print.c \
-      rotation.c
+      rotation.c \
+      move.c
 
 INCLUDES = libft/libft.a
 

@@ -16,68 +16,21 @@ int keys(int key, t_fdf *fdf)
 {
     if (key == 53)
         exit(0);
-    if (key == 124)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
-        fdf->place_w += 5;
-        print(fdf);
-    }
-    if (key == 123)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
-        fdf->place_w -= 5;
-        print(fdf);
-    }
-    if (key == 126)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
-        fdf->place_h -= 5;
-        print(fdf);
-    }
-    if (key == 125)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
-        fdf->place_h += 5;
-        print(fdf);
-    }
-    if (key == 78)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
-        fdf->mult--;
-        if(fdf->mult < 0)
-            fdf->mult = 0;
-        print(fdf);
-    }
-    if (key == 69)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
-        fdf->mult++;
-        print(fdf);
-    }
+    if (key == 124 || key == 123)
+        move_x(fdf, key);
+    if (key == 126 || key == 125)
+        move_y(fdf, key);
+    if (key == 78 || key == 69) //скаляция
+        scale(fdf, key);
     if (key == 13)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
         x_rotation(fdf);
-        print(fdf);
-    }
     if (key == 2)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
         y_rotation(fdf);
-        print(fdf);
-    }
-    if (key == 0)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
+    if (key == 6)
         z_rotation(fdf);
-        print(fdf);
-    }
     if (key == 11)
-    {
-        mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
-        begin(fdf);
-        print(fdf);
-
-    }
+        begin(fdf, 1);
+    if (key == 49)
+        iso(fdf);
     return (0);
 }

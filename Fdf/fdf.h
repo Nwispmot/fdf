@@ -44,10 +44,15 @@ typedef struct s_mcoor
     int win_w;
     char **map;
     int mult;
+    int bemult;
+    int beplace_w;
+    int beplace_h;
     int place_w;
     int place_h;
     int *image;
     double sico;
+    double x0;
+    double y0;
 
 }              t_fdf;
 
@@ -58,9 +63,13 @@ void validation(t_fdf *fdf, char **temp);
 t_fdf *coordinates(int fd);
 void bresenham(t_fdf *fdf, double x0, double y0, double x1, double y1);
 void print(t_fdf *fdf);
-void begin(t_fdf *fdf);
+void begin(t_fdf *fdf, int pr);
 void x_rotation(t_fdf *fdf);
 void y_rotation(t_fdf *fdf);
 void z_rotation(t_fdf *fdf);
+void scale(t_fdf *fdf, int key);
+void move_x(t_fdf *fdf, int key);
+void move_y(t_fdf *fdf, int key);
+void iso(t_fdf *fdf);
 
 #endif
