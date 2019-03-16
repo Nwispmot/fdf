@@ -12,10 +12,8 @@
 
 #include "fdf.h"
 
-void x_rotation(t_fdf *fdf, int key)
+void ud_rotation(t_fdf *fdf, int key)
 {
-    double tmp;
-    double x0;
     double y0;
     int x;
     int y;
@@ -26,16 +24,14 @@ void x_rotation(t_fdf *fdf, int key)
         fdf->sico = -0.1;
     x = 0;
     y = 0;
-    x0 = fdf->place_w;
-    y0 = fdf->place_h;
 
     while (y < fdf->height)
     {
         while (x < fdf->width)
         {
-            tmp = fdf->mass[y][x].y;
-            fdf->mass[y][x].y = fdf->mass[y][x].y * cos(fdf->sico) + fdf->mass[y][x].z * sin(fdf->sico);
-            fdf->mass[y][x].z = -tmp * sin(fdf->sico) + fdf->mass[y][x].z * cos(fdf->sico);
+            y0 = fdf->mass[y][x].y - fdf->height / 2;
+            fdf->mass[y][x].y = fdf->height/2 + y0 * cos(fdf->sico) + fdf->mass[y][x].z * sin(fdf->sico);
+            fdf->mass[y][x].z = -y0 * sin(fdf->sico) + fdf->mass[y][x].z * cos(fdf->sico);
             x++;
         }
         x = 0;
@@ -45,11 +41,11 @@ void x_rotation(t_fdf *fdf, int key)
     print(fdf);
 }
 
-void y_rotation(t_fdf *fdf, int key)
+void lr_rotation(t_fdf *fdf, int key)
 {
-    double tmp;
     int x;
     int y;
+    double x0;
 
     if (key == 2)
         fdf->sico = 0.1;
@@ -61,9 +57,9 @@ void y_rotation(t_fdf *fdf, int key)
     {
         while (x < fdf->width)
         {
-            tmp = fdf->mass[y][x].x;
-            fdf->mass[y][x].x = fdf->mass[y][x].x * cos(fdf->sico) + fdf->mass[y][x].z * sin(fdf->sico);
-            fdf->mass[y][x].z = -tmp * sin(fdf->sico) + fdf->mass[y][x].z * cos(fdf->sico);
+            x0 = fdf->mass[y][x].x - fdf->width / 2;
+            fdf->mass[y][x].x = fdf->width/2 + x0 * cos(fdf->sico) + fdf->mass[y][x].z * sin(fdf->sico);
+            fdf->mass[y][x].z = -x0 * sin(fdf->sico) + fdf->mass[y][x].z * cos(fdf->sico);
             x++;
         }
         x = 0;
@@ -81,10 +77,11 @@ void z_rotation(t_fdf *fdf, int key)
     double x0;
     double y0;
 
+
     if (key == 6)
-        fdf->sico = 0.1;
-    else
         fdf->sico = -0.1;
+    else
+        fdf->sico = 0.1;
     x = 0;
     y = 0;
     x0 = (fdf->win_w / 2);
@@ -94,9 +91,11 @@ void z_rotation(t_fdf *fdf, int key)
     {
         while (x < fdf->width)
         {
-            tmp = fdf->mass[y][x].x;
-            fdf->mass[y][x].x = fdf->mass[y][x].x * cos(fdf->sico) - fdf->mass[y][x].y * sin(fdf->sico);
-            fdf->mass[y][x].y = tmp * sin(fdf->sico) + fdf->mass[y][x].y * cos(fdf->sico) ;
+            x0 = fdf->mass[y][x].x - fdf->width / 2;
+            y0 = fdf->mass[y][x].y - fdf->height / 2;
+            fdf->mass[y][x].x = fdf->width/2 + x0 * cos(fdf->sico) - y0 * sin(fdf->sico);
+            fdf->mass[y][x].y = fdf->height/2 + y0 * cos(fdf->sico) + x0 * sin(fdf->sico);
+
             x++;
         }
         x = 0;

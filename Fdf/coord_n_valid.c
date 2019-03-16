@@ -22,7 +22,12 @@ void ft_mult(t_fdf *fdf)
         tmp = fdf->height;
     printf("tmp = %d\n", tmp);
     mult = 30;
-    if (tmp > 200)
+    if (tmp > 400)
+    {
+        mult = 2;
+        tmp = 0;
+    }
+    else if (tmp > 200)
     {
         while (tmp > 9)
             tmp = tmp / 10;
@@ -32,7 +37,7 @@ void ft_mult(t_fdf *fdf)
     {
         while (tmp > 9)
             tmp = tmp / 10;
-        mult = tmp + 5;
+        mult = tmp + 6;
     }
     printf("mult = %d\n", mult);
     fdf->mult = mult;

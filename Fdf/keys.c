@@ -23,9 +23,9 @@ int keys(int key, t_fdf *fdf)
     if (key == 78 || key == 69)
         scale(fdf, key);
     if (key == 1 || key == 13) //up down
-        x_rotation(fdf, key);
+        ud_rotation(fdf, key);
     if (key == 2 || key == 0) //left right
-        y_rotation(fdf, key);
+        lr_rotation(fdf, key);
     if (key == 6 || key == 7) //lef rig z
         z_rotation(fdf, key);
     if (key == 11)
