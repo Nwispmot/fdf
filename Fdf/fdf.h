@@ -58,11 +58,9 @@ typedef struct s_mcoor
 
 }              t_fdf;
 
-double ft_abs(double value);
 int keys(int key, t_fdf *fdf);
-int keys2(int key, t_fdf *fdf);
 void validation(t_fdf *fdf, char **temp);
-t_fdf *coordinates(int fd);
+void coordinates(int fd, t_fdf *fdf);
 void bresenham(t_fdf *fdf, double x0, double y0, double x1, double y1);
 void print(t_fdf *fdf);
 void begin(t_fdf *fdf, int pr);
@@ -73,6 +71,6 @@ void scale(t_fdf *fdf, int key);
 void move_x(t_fdf *fdf, int key);
 void move_y(t_fdf *fdf, int key);
 void iso(t_fdf *fdf);
-void ft_init(t_fdf fdf);
+void ft_init(t_fdf *fdf);
 
 #endif

@@ -17,6 +17,8 @@ int main(int argc, char **argv)
     int fd;
     t_fdf *fdf;
 
+    if(!(fdf = (t_fdf*)malloc(sizeof(t_fdf))))
+        exit(0);
     fd = open(argv[1], O_RDONLY);
     if (argc != 2)
     {
@@ -28,13 +30,8 @@ int main(int argc, char **argv)
         ft_putstr("error\n");
         return (0);
     }
-    fdf = coordinates(fd);
-    fdf->place_w = (fdf->win_w - (fdf->width - 1) * fdf->mult) / 2;
-    fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
-    fdf->mlx_ptr = mlx_init();
-    fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->win_w, fdf->win_h, "FDF");
-    fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->win_w, fdf->win_h);
+    ft_init(fdf);
+    coordinates(fd, fdf);
     print(fdf);
-    mlx_hook(fdf->win_ptr, 2, 0, keys, fdf);
     mlx_loop(fdf->mlx_ptr);
 }

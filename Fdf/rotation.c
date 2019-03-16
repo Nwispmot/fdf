@@ -71,7 +71,6 @@ void lr_rotation(t_fdf *fdf, int key)
 
 void z_rotation(t_fdf *fdf, int key)
 {
-    double tmp;
     int x;
     int y;
     double x0;

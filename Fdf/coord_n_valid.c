@@ -12,6 +12,13 @@
 
 #include "fdf.h"
 
+int ft_del(int tmp)
+{
+    while (tmp > 9)
+        tmp = tmp / 10;
+    return(tmp);
+}
+
 void ft_mult(t_fdf *fdf)
 {
     int tmp;
@@ -20,7 +27,6 @@ void ft_mult(t_fdf *fdf)
     tmp = fdf->width;
     if (fdf->height > tmp)
         tmp = fdf->height;
-    printf("tmp = %d\n", tmp);
     mult = 30;
     if (tmp > 400)
     {
@@ -29,17 +35,14 @@ void ft_mult(t_fdf *fdf)
     }
     else if (tmp > 200)
     {
-        while (tmp > 9)
-            tmp = tmp / 10;
+        tmp = ft_del(tmp);
         mult = tmp;
     }
     else if (tmp > 25 && tmp <= 200)
     {
-        while (tmp > 9)
-            tmp = tmp / 10;
+        tmp = ft_del(tmp);
         mult = tmp + 6;
     }
-    printf("mult = %d\n", mult);
     fdf->mult = mult;
     fdf->bemult = mult;
 }
@@ -78,20 +81,28 @@ char *buffer(int fd)
     return(temp);
 }
 
-t_fdf *coordinates(int fd)
+void ft_init(t_fdf *fdf)
+{
+    fdf->height = 0;
+    fdf->width = 0;
+    fdf->win_h = 1000;
+    fdf->win_w = 1000;
+    ft_mult(fdf);
+    fdf->mlx_ptr = mlx_init();
+    fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->win_w, fdf->win_h, "FDF");
+    fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->win_w, fdf->win_h);
+    mlx_hook(fdf->win_ptr, 2, 0, keys, fdf);
+}
+
+void coordinates(int fd, t_fdf *fdf)
 {
     int x;
     int y;
     char *buf;
     char **temp;
-    t_fdf *fdf;
 
     x = 0;
     y = 0;
-    if(!(fdf = (t_fdf*)malloc(sizeof(t_fdf))))
-        exit(0);
-    fdf->height = 0;
-    fdf->width = 0;
     buf = buffer(fd);
     fdf->map = ft_strsplit(buf, '\n');
     while (fdf->map[fdf->height] != NULL)
@@ -126,13 +137,8 @@ t_fdf *coordinates(int fd)
         ft_strdel(temp);
         temp = ft_strsplit(fdf->map[y], ' ');
     }
-    fdf->win_h = 1000;
-    fdf->win_w = 1000;
-    ft_mult(fdf);
     fdf->place_w = (fdf->win_w - (fdf->width - 1) * fdf->mult) / 2;
     fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
     fdf->beplace_h = fdf->place_h;
     fdf->beplace_w = fdf->place_w;
-
-    return(fdf);
 }
