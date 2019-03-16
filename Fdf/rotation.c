@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void x_rotation(t_fdf *fdf)
+void x_rotation(t_fdf *fdf, int key)
 {
     double tmp;
     double x0;
@@ -20,6 +20,10 @@ void x_rotation(t_fdf *fdf)
     int x;
     int y;
 
+    if (key == 1)
+        fdf->sico = 0.1;
+    else
+        fdf->sico = -0.1;
     x = 0;
     y = 0;
     x0 = fdf->place_w;
@@ -41,12 +45,16 @@ void x_rotation(t_fdf *fdf)
     print(fdf);
 }
 
-void y_rotation(t_fdf *fdf)
+void y_rotation(t_fdf *fdf, int key)
 {
     double tmp;
     int x;
     int y;
 
+    if (key == 2)
+        fdf->sico = 0.1;
+    else
+        fdf->sico = -0.1;
     x = 0;
     y = 0;
     while (y < fdf->height)
@@ -65,7 +73,7 @@ void y_rotation(t_fdf *fdf)
     print(fdf);
 }
 
-void z_rotation(t_fdf *fdf)
+void z_rotation(t_fdf *fdf, int key)
 {
     double tmp;
     int x;
@@ -73,6 +81,10 @@ void z_rotation(t_fdf *fdf)
     double x0;
     double y0;
 
+    if (key == 6)
+        fdf->sico = 0.1;
+    else
+        fdf->sico = -0.1;
     x = 0;
     y = 0;
     x0 = (fdf->win_w / 2);
@@ -117,5 +129,6 @@ void iso(t_fdf *fdf)
         x = 0;
         y++;
     }
+    fdf->place_w += 150;
     print(fdf);
 }

@@ -22,17 +22,17 @@ void ft_mult(t_fdf *fdf)
         tmp = fdf->height;
     printf("tmp = %d\n", tmp);
     mult = 30;
-    if (tmp >= 100)
+    if (tmp > 200)
     {
         while (tmp > 9)
             tmp = tmp / 10;
         mult = tmp;
     }
-    else if (tmp > 25 && tmp < 100)
+    else if (tmp > 25 && tmp <= 200)
     {
         while (tmp > 9)
             tmp = tmp / 10;
-        mult = tmp + 10;
+        mult = tmp + 5;
     }
     printf("mult = %d\n", mult);
     fdf->mult = mult;
@@ -128,7 +128,6 @@ t_fdf *coordinates(int fd)
     fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
     fdf->beplace_h = fdf->place_h;
     fdf->beplace_w = fdf->place_w;
-    fdf->sico = 0.1;
 
     return(fdf);
 }

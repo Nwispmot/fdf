@@ -37,6 +37,7 @@ void scale(t_fdf *fdf, int key)
     if (key == 78)
     {
         fdf->mult--;
+        fdf->place_w += 5;
         printf("mu = %d", fdf->mult);
         if(fdf->mult < 0)
             fdf->mult = 0;

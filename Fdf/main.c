@@ -33,6 +33,7 @@ int main(int argc, char **argv)
     fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
     fdf->mlx_ptr = mlx_init();
     fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->win_w, fdf->win_h, "FDF");
+    fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->win_w, fdf->win_h);
     print(fdf);
     mlx_hook(fdf->win_ptr, 2, 0, keys, fdf);
     mlx_loop(fdf->mlx_ptr);

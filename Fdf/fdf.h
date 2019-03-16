@@ -38,6 +38,7 @@ typedef struct s_mcoor
     t_coor **begin;
     void *mlx_ptr;
     void *win_ptr;
+    void *img_ptr;
     int height;
     int width;
     int win_h;
@@ -54,6 +55,7 @@ typedef struct s_mcoor
     double x0;
     double y0;
 
+
 }              t_fdf;
 
 double ft_abs(double value);
@@ -64,9 +66,9 @@ t_fdf *coordinates(int fd);
 void bresenham(t_fdf *fdf, double x0, double y0, double x1, double y1);
 void print(t_fdf *fdf);
 void begin(t_fdf *fdf, int pr);
-void x_rotation(t_fdf *fdf);
-void y_rotation(t_fdf *fdf);
-void z_rotation(t_fdf *fdf);
+void x_rotation(t_fdf *fd, int key);
+void y_rotation(t_fdf *fdf, int key);
+void z_rotation(t_fdf *fdf, int key);
 void scale(t_fdf *fdf, int key);
 void move_x(t_fdf *fdf, int key);
 void move_y(t_fdf *fdf, int key);
