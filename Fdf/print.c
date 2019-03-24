@@ -42,7 +42,6 @@ void print(t_fdf *fdf)
                   fdf->mass[y][x + 1].x * fdf->mult + fdf->place_w, fdf->mass[y][x + 1].y * fdf->mult + fdf->place_h);
         x++;
     }
-    mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, fdf->win_w / 2, fdf->win_h / 2, 0xff0000);
 }
 
 void begin(t_fdf *fdf, int pr)

@@ -21,28 +21,17 @@ int ft_del(int tmp)
 
 void ft_mult(t_fdf *fdf)
 {
+    int twin;
     int tmp;
     int mult;
 
-    tmp = fdf->width;
-    if (fdf->height > tmp)
-        tmp = fdf->height;
-    mult = 30;
-    if (tmp > 400)
-    {
-        mult = 2;
-        tmp = 0;
-    }
-    else if (tmp > 200)
-    {
-        tmp = ft_del(tmp);
-        mult = tmp;
-    }
-    else if (tmp > 25 && tmp <= 200)
-    {
-        tmp = ft_del(tmp);
-        mult = tmp + 6;
-    }
+    tmp = fdf->width - 1;
+    if (fdf->height - 1 > tmp)
+        tmp = fdf->height - 1;
+    twin = fdf->win_w;
+    if (fdf->win_h > twin)
+        twin = fdf->height;
+    mult = ((twin / 100) * 50) / tmp;
     fdf->mult = mult;
     fdf->bemult = mult;
 }
@@ -87,7 +76,6 @@ void ft_init(t_fdf *fdf)
     fdf->width = 0;
     fdf->win_h = 1000;
     fdf->win_w = 1000;
-    ft_mult(fdf);
     fdf->mlx_ptr = mlx_init();
     fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->win_w, fdf->win_h, "FDF");
     fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->win_w, fdf->win_h);
@@ -114,6 +102,7 @@ void coordinates(int fd, t_fdf *fdf)
     temp = ft_strsplit(fdf->map[0], ' ');
     while(temp[fdf->width] != NULL)
         fdf->width++;
+    ft_mult(fdf);
 
     while (y < fdf->height)
     {
