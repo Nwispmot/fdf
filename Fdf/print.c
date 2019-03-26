@@ -12,36 +12,40 @@
 
 #include "fdf.h"
 
-void print(t_fdf *fdf)
+void print(t_fdf *fdf) //-
 {
     int x;
     int y;
 
-    x = 0;
+    ft_bzero(fdf->img, fdf->win_h * fdf->win_w * 4);
+    mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
     y = 0;
     while (y < fdf->height - 1)
     {
+    	x = 0;
         while (x < fdf->width - 1)
         {
             bresenham(fdf, fdf->mass[y][x].x * fdf->mult + fdf->place_w, fdf->mass[y][x].y * fdf->mult + fdf->place_h,
                       fdf->mass[y][x + 1].x * fdf->mult + fdf->place_w,
-                      fdf->mass[y][x + 1].y * fdf->mult + fdf->place_h);
+                      fdf->mass[y][x + 1].y * fdf->mult + fdf->place_h, x, y);
             bresenham(fdf, fdf->mass[y][x].x * fdf->mult + fdf->place_w, fdf->mass[y][x].y * fdf->mult + fdf->place_h,
                       fdf->mass[y + 1][x].x * fdf->mult + fdf->place_w,
-                      fdf->mass[y + 1][x].y * fdf->mult + fdf->place_h);
+                      fdf->mass[y + 1][x].y * fdf->mult + fdf->place_h, x, y);
             x++;
         }
         bresenham(fdf, fdf->mass[y][x].x * fdf->mult + fdf->place_w, fdf->mass[y][x].y * fdf->mult + fdf->place_h,
-                  fdf->mass[y + 1][x].x * fdf->mult + fdf->place_w, fdf->mass[y + 1][x].y * fdf->mult + fdf->place_h);
-        x = 0;
+                  fdf->mass[y + 1][x].x * fdf->mult + fdf->place_w, fdf->mass[y + 1][x].y * fdf->mult + fdf->place_h, x ,y);
         y++;
     }
+    x = 0;
     while (x < fdf->width - 1)
     {
         bresenham(fdf, fdf->mass[y][x].x * fdf->mult + fdf->place_w, fdf->mass[y][x].y * fdf->mult + fdf->place_h,
-                  fdf->mass[y][x + 1].x * fdf->mult + fdf->place_w, fdf->mass[y][x + 1].y * fdf->mult + fdf->place_h);
+                  fdf->mass[y][x + 1].x * fdf->mult + fdf->place_w, fdf->mass[y][x + 1].y * fdf->mult + fdf->place_h, x, y);
         x++;
     }
+    mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
+    fdf->sico = 0.1;
 }
 
 void begin(t_fdf *fdf, int pr)
@@ -66,6 +70,7 @@ void begin(t_fdf *fdf, int pr)
         x = 0;
         y++;
     }
+    ft_bzero(fdf->img, fdf->win_h * fdf->win_h * 4);
     mlx_clear_window((fdf)->mlx_ptr, (fdf)->win_ptr);
     if (pr == 1)
         print(fdf);

@@ -12,14 +12,7 @@
 
 #include "fdf.h"
 
-int ft_del(int tmp)
-{
-    while (tmp > 9)
-        tmp = tmp / 10;
-    return(tmp);
-}
-
-void ft_mult(t_fdf *fdf)
+void    ft_mult(t_fdf *fdf)
 {
     int twin;
     int tmp;
@@ -36,7 +29,7 @@ void ft_mult(t_fdf *fdf)
     fdf->bemult = mult;
 }
 
-void validation(t_fdf *fdf, char **temp)
+void    validation(t_fdf *fdf, char **temp)
 {
     int width;
 
@@ -52,7 +45,7 @@ void validation(t_fdf *fdf, char **temp)
     }
 }
 
-char *buffer(int fd)
+char    *buffer(int fd)
 {
     char buf[BUFF_SIZE + 1];
     char *temp;
@@ -70,26 +63,59 @@ char *buffer(int fd)
     return(temp);
 }
 
-void ft_init(t_fdf *fdf)
+void    ft_init(t_fdf *fdf, int nu)
 {
-    fdf->height = 0;
-    fdf->width = 0;
-    fdf->win_h = 1000;
-    fdf->win_w = 1000;
-    fdf->mlx_ptr = mlx_init();
-    fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->win_w, fdf->win_h, "FDF");
-    fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->win_w, fdf->win_h);
-    mlx_hook(fdf->win_ptr, 2, 0, keys, fdf);
+    if(nu == 0)
+    {
+        fdf->height = 0;
+        fdf->width = 0;
+        fdf->win_h = 1000;
+        fdf->win_w = 1000;
+        fdf->mlx_ptr = mlx_init();
+        fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->win_w, fdf->win_h, "FDF");
+        fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->win_w, fdf->win_h);
+        fdf->img = (int*)mlx_get_data_addr(fdf->img_ptr, &fdf->bpp, &fdf->size_line, &fdf->endian);
+        mlx_hook(fdf->win_ptr, 2, 0, keys, fdf);
+    }
+    if (nu == 1)
+    {
+        fdf->place_w = (fdf->win_w - (fdf->width - 1) * fdf->mult) / 2;
+        fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
+        fdf->beplace_h = fdf->place_h;
+        fdf->beplace_w = fdf->place_w;
+    }
 }
 
-void coordinates(int fd, t_fdf *fdf)
+void    ft_color(t_fdf *fdf, char *temp, int x, int y)
+{
+    int i;
+    char *color;
+
+    i = 0;
+    while(temp[i])
+    {
+        if (temp[i] == ',')
+        {
+            if(temp[i + 1] == '0' && temp[i + 2] == 'x')
+            {
+                i += 3;
+                color = ft_strsub(temp, i, ft_strlen(temp) - i);
+                fdf->mass[y][x].color = ft_atoi_base(color, 16);
+                return;
+            }
+        }
+        i++;
+    }
+    fdf->mass[y][x].color = 0x00FFFF;
+}
+
+void    coordinates(int fd, t_fdf *fdf) //-
 {
     int x;
     int y;
     char *buf;
     char **temp;
 
-    x = 0;
     y = 0;
     buf = buffer(fd);
     fdf->map = ft_strsplit(buf, '\n');
@@ -106,6 +132,7 @@ void coordinates(int fd, t_fdf *fdf)
 
     while (y < fdf->height)
     {
+        x = 0;
         if (!(fdf->mass[y] = (t_coor*)malloc(sizeof(t_coor) * fdf->width)))
             exit(0);
         if (!(fdf->begin[y] = (t_coor*)malloc(sizeof(t_coor) * fdf->width)))
@@ -116,18 +143,15 @@ void coordinates(int fd, t_fdf *fdf)
             fdf->mass[y][x].x = x;
             fdf->mass[y][x].y = y;
             fdf->mass[y][x].z = ft_atoi(temp[x]);
+            ft_color(fdf, temp[x], x, y);
             fdf->begin[y][x].x = x;
             fdf->begin[y][x].y = y;
             fdf->begin[y][x].z = ft_atoi(temp[x]);
             x++;
         }
-        x = 0;
         y++;
         ft_strdel(temp);
         temp = ft_strsplit(fdf->map[y], ' ');
     }
-    fdf->place_w = (fdf->win_w - (fdf->width - 1) * fdf->mult) / 2;
-    fdf->place_h = (fdf->win_h - (fdf->height - 1) * fdf->mult) / 2;
-    fdf->beplace_h = fdf->place_h;
-    fdf->beplace_w = fdf->place_w;
+    ft_init(fdf, 1);
 }
