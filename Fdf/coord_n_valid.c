@@ -29,20 +29,50 @@ void    ft_mult(t_fdf *fdf)
     fdf->bemult = mult;
 }
 
+int isnum(char *temp)
+{
+	int i;
+
+	i = 0;
+	if (temp[i] >= '0' && temp[i] <= '9')
+		i++;
+	else
+		return(1);
+	while (temp[i] != '\0' && temp[i] != ',')
+	{
+		if (temp[i] >= '0' && temp[i] <= '9')
+			i++;
+		else
+			return (1);
+	}
+		return(0);
+}
+
 void    validation(t_fdf *fdf, char **temp)
 {
     int width;
+    int i;
 
+    i = 0;
+	if(!temp)
+		exit(0);
     width = 0;
-    while(temp[width] != '\0')
+    while(temp[width] != NULL)
         width++;
-    printf("%d\n", fdf->width);
     if (fdf->width != width)
     {
-        printf("%d\n", width);
-        ft_putstr("Invalid file\n");
+        ft_putstr("Invalid file width\n");
         exit(0);
     }
+    while (temp[i] != NULL)
+	{
+    	if(isnum(temp[i]) == 1)
+		{
+			ft_putstr("Invalid file number\n");
+			exit(0);
+		}
+    	i++;
+	}
 }
 
 char    *buffer(int fd)
@@ -60,6 +90,12 @@ char    *buffer(int fd)
         temp = ft_strjoin(temp, buf);
         free(del);
     }
+    if (ret < 0 || temp[0] == '\0' || temp[1] == '\0')
+    {
+    	printf("%d\n", ret);
+		ft_putstr("Invalid file\n");
+		exit(0);
+	}
     return(temp);
 }
 
@@ -86,6 +122,19 @@ void    ft_init(t_fdf *fdf, int nu)
     }
 }
 
+int validcolor(t_fdf *fdf, int i, char *temp)
+{
+	while (temp[i])
+	{
+		if ((temp[i] >= '0' && temp[i] <= '9') || (temp[i] >= 'A' && temp[i] <= 'F') ||
+			(temp[i] >= 'a' && temp[i] <= 'f'))
+			i++;
+		else
+			return (1);
+	}
+	return (0);
+}
+
 void    ft_color(t_fdf *fdf, char *temp, int x, int y)
 {
     int i;
@@ -98,7 +147,12 @@ void    ft_color(t_fdf *fdf, char *temp, int x, int y)
         {
             if(temp[i + 1] == '0' && temp[i + 2] == 'x')
             {
-                i += 3;
+				i += 3;
+            	if(validcolor(fdf, i, temp) == 1)
+            	{
+					fdf->mass[y][x].color = 0x00FFFF;
+					return;
+				}
                 color = ft_strsub(temp, i, ft_strlen(temp) - i);
                 fdf->mass[y][x].color = ft_atoi_base(color, 16);
                 return;
@@ -137,7 +191,7 @@ void    coordinates(int fd, t_fdf *fdf) //-
             exit(0);
         if (!(fdf->begin[y] = (t_coor*)malloc(sizeof(t_coor) * fdf->width)))
             exit(0);
-        //validation(fdf, temp);
+        validation(fdf, temp);
         while (x < fdf->width)
         {
             fdf->mass[y][x].x = x;
