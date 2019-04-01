@@ -5,12 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: nwispmot <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/12/05 19:40:38 by nwispmot          #+#    #+#              #
-#    Updated: 2019/03/02 17:32:35 by nwispmot         ###   ########.fr        #
+#    Created: 2019/03/29 21:08:20 by nwispmot          #+#    #+#              #
+#    Updated: 2019/03/29 21:08:25 by nwispmot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
+
+OBJ = $(patsubst %.c, %.o, $(SRC))
 
 SRC = main.c \
       keys.c \
@@ -22,17 +24,30 @@ SRC = main.c \
       valid.c \
       mem.c
 
-INCLUDES = libft/libft.a
+INC = fdf.h
+
+LIB = ./libft/libft.a
+
+FLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME):
-		cc -I /usr/local/include $(SRC) -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(INCLUDES)
+$(NAME): $(OBJ)
+	make -C libft
+	gcc $(FLAGS) -o $(NAME) $^ -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit $(LIB) -I $(INC) 
+
+%.o:%.c
+	gcc $(FLAGS) -c $^ -o $@ -I $(INC)
+
+run: 
+	gcc -g $(SRC) -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit $(LIB) -I $(INC) -o $(NAME)
 
 clean:
-		rm -f *.o    
+	make clean -C ./libft
+	rm -f $(OBJ)
 
-fclean: clean
-		rm -f $(NAME)
+fclean:	clean
+	make fclean -C ./libft 
+	/bin/rm -f $(NAME)
 
 re: fclean all

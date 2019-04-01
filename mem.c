@@ -49,4 +49,10 @@ void	count(t_fdf *fdf)
 	fdf->temp = ft_strsplit(fdf->map[0], ' ');
 	while (fdf->temp[fdf->width] != NULL)
 		fdf->width++;
+	if ((fdf->width == 0 && fdf->height == 0) ||
+	(fdf->width == 1 && fdf->height == 1))
+	{
+		ft_putstr("Invalid file (argument)\n");
+		exit(0);
+	}
 }

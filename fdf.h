@@ -76,7 +76,7 @@ typedef struct		s_mcoor
 }					t_fdf;
 
 int					keys(int key, t_fdf *fdf);
-int					validcolor(t_fdf *fdf, int i, char *temp);
+int					validcolor(int i, char *temp);
 void				validation(t_fdf *fdf, char **temp);
 void				coordinates(int fd, t_fdf *fdf);
 void				bresenham(t_fdf *fdf);

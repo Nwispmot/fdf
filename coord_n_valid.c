@@ -44,7 +44,7 @@ char	*buffer(int fd)
 		temp = ft_strjoin(temp, buf);
 		free(del);
 	}
-	if (ret < 0 || temp[0] == '\0' || temp[1] == '\0')
+	if (ret < 0 || temp[0] == '\0')
 	{
 		ft_putstr("Invalid file\n");
 		exit(0);
@@ -56,10 +56,6 @@ void	ft_init(t_fdf *fdf, int nu)
 {
 	if (nu == 0)
 	{
-		fdf->height = 0;
-		fdf->width = 0;
-		fdf->win_h = 1000;
-		fdf->win_w = 1000;
 		fdf->mlx_ptr = mlx_init();
 		fdf->win_ptr = mlx_new_window(fdf->mlx_ptr,
 				fdf->win_w, fdf->win_h, "FDF");
@@ -91,7 +87,7 @@ void	ft_color(t_fdf *fdf, char *temp, int x, int y)
 			if (temp[i + 1] == '0' && temp[i + 2] == 'x')
 			{
 				i += 3;
-				if (validcolor(fdf, i, temp) == 1)
+				if (validcolor(i, temp) == 1)
 				{
 					fdf->mass[y][x].color = 0x00FFFF;
 					return ;

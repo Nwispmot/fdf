@@ -30,8 +30,12 @@ int	main(int argc, char **argv)
 		ft_putstr("read error\n");
 		return (0);
 	}
-	ft_init(fdf, 0);
+	fdf->height = 0;
+	fdf->width = 0;
+	fdf->win_h = 1000;
+	fdf->win_w = 1000;
 	coordinates(fd, fdf);
+	ft_init(fdf, 0);
 	print(fdf);
 	mlx_loop(fdf->mlx_ptr);
 	exit(0);

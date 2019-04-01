@@ -17,6 +17,8 @@ static int	isnum(char *temp)
 	int i;
 
 	i = 0;
+	if (temp[i] == '-')
+		i++;
 	if (temp[i] >= '0' && temp[i] <= '9')
 		i++;
 	else
@@ -58,7 +60,7 @@ void		validation(t_fdf *fdf, char **temp)
 	}
 }
 
-int			validcolor(t_fdf *fdf, int i, char *temp)
+int			validcolor(int i, char *temp)
 {
 	while (temp[i])
 	{
